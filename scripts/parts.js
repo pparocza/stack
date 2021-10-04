@@ -94,27 +94,39 @@ class Piece {
         this.qN = 4 * ( 1 / this.rate );
         this.bar = 4 * this.qN;
         this.nBars = 16;
+        this.structureIdx = randomInt( 0 , 2 );
 
-        // minimumVoices **
-        // this.randomStructure( 1 );
+        switch( this.structureIdx){
+
+            case 0: 
+                console.log( 'random structure' );
+                // minimumVoices
+                this.randomStructure( 1 );
+                break;
+
+            case 1: 
+                console.log( 'random range structure' );
+                // minimumVoices , maximumVoices **
+                this.randomRangeStructure( 1 , this.rCArray.length + 1 );
+                break;
+
+            case 2:
+                console.log( 'spec arrangement structure' );
+                // arrangementArray **
+                this.specArrangementStructure( 
+                    // if you replace each item with a randomInt, you can maintain a general
+                    // arrangement contour, but still have variety between outputs
+                    [ 5 , 2 , 5 , 1 , 3 , 6 , 2 , 7 , 1 , 8 , 7 , 6 , 5 , 4 , 3 , 1 ] 
+                );
+                break;
+
+        }
 
         // modulus
-        // this.moduloStructure( 2 );
-
-        // minimumVoices , maximumVoices **
-        // this.randomRangeStructure( 1 , this.rCArray.length + 1 );
-
-        /*
-        // arrangementArray **
-         this.specArrangementStructure( 
-            // if you replace each item with a randomInt, you can maintain a general
-            // arrangement contour, but still have variety between outputs
-            [ 5 , 2 , 5 , 1 , 3 , 6 , 2 , 7 , 1 , 8 , 7 , 6 , 5 , 4 , 3 , 1 ] 
-        );
-        */
+        // this.moduloStructure( 2 );        
 
         // groupSize
-        this.twoGroups( 4 );
+        // this.twoGroups( 4 );
 
     }
 
