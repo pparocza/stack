@@ -65,21 +65,23 @@ class Piece {
             // RAMPING CONVOLVER
 
             this.fund = randomFloat( 350 , 450 );
-            this.rate = 4;
-            this.rateMult = randomFloat( 1 , 1 );
+            this.rate = randomFloat( 3.5 , 6 ); // 4
+            this.gainVal = 1;
+
+            console.log( `fund: ${this.fund} , rate: ${this.rate}` );
     
             // startTime , rate , rampArray , bufferLength , fund , frequencyRange , gainVal
 
-                this.rC5.load( this.rateMult * ( this.rate / 3 )  , [ 0 , 1 , 0.01 , 0.015 , 0.1 , 4 ] , randomArrayValue( [ 0.5 , 1 , 2 ])        , this.fund * 0.5 , [ 100 , 5000 ]  , 2 );
-                this.rC4.load( this.rateMult * ( this.rate * 1 )  , [ 0 , 1 , 0.01 , 0.015 , 0.1 , 4 ] , randomArrayValue( [ 0.25 , 0.5 , 1 , 2 ]) , this.fund       , [ 100 , 1000 ]  , 2 );
-                this.rC3.load( this.rateMult * ( this.rate * 2 )  , [ 0 , 1 , 0.01 , 0.015 , 0.1 , 4 ] , randomArrayValue( [ 0.25 , 0.5 , 1 , 2 ]) , this.fund       , [ 4000 , 7000 ] , 2 );
-                this.rC2.load( this.rateMult * ( this.rate / 16 ) , [ 0 , 1 , 0.01 , 0.015 , 0.1 , 4 ] , randomArrayValue( [ 1 ])                  , this.fund       , [ 100 , 500 ]   , 2 );
-                this.rC1.load( this.rateMult * ( this.rate / 32 ) , [ 0 , 1 , 0.01 , 0.015 , 0.1 , 4 ] , randomArrayValue( [ 2 ])                  , this.fund * 0.5 , [ 100 , 500 ]   , 2 );
+                this.rC5.load( ( this.rate / 3 )  , [ 0 , 1 , 0.01 , 0.015 , 0.1 , 4 ] , randomArrayValue( [ 0.5 , 1 , 2 ])        , this.fund * 0.5 , [ 100 , 5000 ]  , this.gainVal * 2 );
+                this.rC4.load( ( this.rate * 1 )  , [ 0 , 1 , 0.01 , 0.015 , 0.1 , 4 ] , randomArrayValue( [ 0.25 , 0.5 , 1 , 2 ]) , this.fund       , [ 100 , 1000 ]  , this.gainVal * 2 );
+                this.rC3.load( ( this.rate * 2 )  , [ 0 , 1 , 0.01 , 0.015 , 0.1 , 4 ] , randomArrayValue( [ 0.25 , 0.5 , 1 , 2 ]) , this.fund       , [ 4000 , 7000 ] , this.gainVal * 2 );
+                this.rC2.load( ( this.rate / 16 ) , [ 0 , 1 , 0.01 , 0.015 , 0.1 , 4 ] , randomArrayValue( [ 1 ])                  , this.fund       , [ 100 , 500 ]   , this.gainVal * 2 );
+                this.rC1.load( ( this.rate / 32 ) , [ 0 , 1 , 0.01 , 0.015 , 0.1 , 4 ] , randomArrayValue( [ 2 ])                  , this.fund * 0.5 , [ 100 , 500 ]   , this.gainVal * 2 );
         
-                this.rC5A.load( this.rateMult * ( this.rate / 3 )  , [ 0 , 1 , 0.5 , 0.5 , 1 , 1 ]      , 2 ,  this.fund * 0.5 , [ 100 , 5000 ] , 0.5 );
-                this.rC4A.load( this.rateMult * ( this.rate * 1 )  , [ 0 , 1 , 0.5 , 0.5 , 1 , 1 ]      , 2 ,  this.fund       , [ 100 , 1000 ] , 0.5 );
-                this.rC3A.load( this.rateMult * ( this.rate / 16 ) , [ 0 , 1 , 0.99 , 0.999 , 5 , 0.5 ] , 2 ,  this.fund * 0.5 , [ 100 , 5000 ] , 1   );
-                this.rC2A.load( this.rateMult * ( this.rate / 8)   , [ 0 , 1 , 0.99 , 0.999 , 5 , 0.5 ] , 2 ,  this.fund       , [ 100 , 1000 ] , 1   );
+                this.rC5A.load( ( this.rate / 3 )  , [ 0 , 1 , 0.5 , 0.5 , 1 , 1 ]      , 2 ,  this.fund * 0.5 , [ 100 , 5000 ] , this.gainVal * 0.5 );
+                this.rC4A.load( ( this.rate * 1 )  , [ 0 , 1 , 0.5 , 0.5 , 1 , 1 ]      , 2 ,  this.fund       , [ 100 , 1000 ] , this.gainVal * 0.5 );
+                this.rC3A.load( ( this.rate / 16 ) , [ 0 , 1 , 0.99 , 0.999 , 5 , 0.5 ] , 2 ,  this.fund * 0.5 , [ 100 , 5000 ] , this.gainVal * 1   );
+                this.rC2A.load( ( this.rate / 8)   , [ 0 , 1 , 0.99 , 0.999 , 5 , 0.5 ] , 2 ,  this.fund       , [ 100 , 1000 ] , this.gainVal * 1   );
 
             this.rCArray = [ this.rC1 , this.rC2 , this.rC3 , this.rC4 , this.rC5 , this.rC4A , this.rC5A , this.rC2A , this.rC3A ];
 
@@ -103,7 +105,11 @@ class Piece {
         // this.randomRangeStructure( 1 , this.rCArray.length + 1 );
 
         // arrangementArray
-        this.specArrangementSize( [ 5 , 2 , 5 , 1 , 3 , 6 , 2 , 7 , 1 , 8 , 7 , 6 , 5 , 4 , 3 , 1 ] );
+        this.specArrangementStructure( 
+            // if you replace each item with a randomInt, you can maintain a general
+            // arrangement contour, but still have variety between outputs
+            [ 5 , 2 , 5 , 1 , 3 , 6 , 2 , 7 , 1 , 8 , 7 , 6 , 5 , 4 , 3 , 1 ] 
+        );
 
     }
 
