@@ -93,7 +93,9 @@ class Piece {
 
     generateStructure(){
 
-        this.randomStructure( 3 );
+        // this.randomStructure( 1 );
+
+        this.moduloStructure( 2 );
 
     }
 
@@ -113,13 +115,40 @@ class Piece {
 
             for( let j = 0 ; j < minimumVoices ; j++ ){
 
-                console.log( j );
-
                 this.structureArray[i].push( 1 );
 
             }
 
             shuffle( this.structureArray[i] );
+            
+        }
+
+        console.log( this.structureArray );
+
+    }
+
+    moduloStructure( modulus ){
+
+        this.structureArray = [];
+
+        let k = 0;
+
+        for( let i = 0 ; i < this.nBars ; i++ ){
+
+            this.structureArray[ i ] = [];
+
+            for( let j = 0 ; j < this.rCArray.length ; j++ ){
+
+                if( k % modulus === 0 ){
+                    this.structureArray[i].push( 1 );
+                }
+                else{ 
+                    this.structureArray[i].push( 0 );
+                };
+
+                k++;
+
+            }
             
         }
 
