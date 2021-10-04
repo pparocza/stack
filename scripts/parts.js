@@ -83,24 +83,27 @@ class Piece {
 
             this.rCArray = [ this.rC1 , this.rC2 , this.rC3 , this.rC4 , this.rC5 , this.rC4A , this.rC5A , this.rC2A , this.rC3A ];
 
-            this.qN = 4 * ( 1 / this.rate );
-            this.bar = 4 * this.qN;
-            this.nBars = 16;
-
             this.generateStructure();
 
     }
 
     generateStructure(){
 
-        // minimumVoices
+        this.qN = 4 * ( 1 / this.rate );
+        this.bar = 4 * this.qN;
+        this.nBars = 16;
+
+        // minimumVoices **
         // this.randomStructure( 1 );
 
         // modulus
         // this.moduloStructure( 2 );
 
-        // minimumVoices , maximumVoices
-        this.randomRangeStructure( 1 , this.rCArray.length + 1 );
+        // minimumVoices , maximumVoices **
+        // this.randomRangeStructure( 1 , this.rCArray.length + 1 );
+
+        // arrangementArray
+        this.specStructure( [ 5 , 2 , 5 , 1 , 3 , 6 , 2 , 7 , 1 , 8 , 7 , 6 , 5 , 4 , 3 , 1 ] );
 
     }
 
@@ -171,6 +174,62 @@ class Piece {
             this.structureArray[ i ] = [];
 
             nVoices = randomInt( minimumVoices , maximumVoices );
+
+            for( let j = 0 ; j < nVoices ; j++ ){
+
+                this.structureArray[i].push( 1 );
+
+            }
+
+            for( let j = 0 ; j < this.rCArray.length - nVoices ; j++ ){
+
+                this.structureArray[i].push( 0 );
+
+            }
+
+            shuffle( this.structureArray[i] );
+            
+        }
+
+        console.log( this.structureArray );
+
+    }
+
+    specStructure( arrangementArray ){
+
+        this.structureArray = [];
+
+        for( let i = 0 ; i < this.nBars ; i++ ){
+
+            this.structureArray[ i ] = [];
+
+            for( let j = 0 ; j < arrangementArray[ i ] ; j++ ){
+
+                this.structureArray[i].push( 1 );
+
+            }
+
+            for( let j = 0 ; j < this.rCArray.length - arrangementArray[ i ] ; j++ ){
+
+                this.structureArray[i].push( 0 );
+
+            }
+
+            shuffle( this.structureArray[i] );
+            
+        }
+
+        console.log( this.structureArray );
+
+    }
+
+    twoGroups( groupSize ){
+
+        this.structureArray = [];
+
+        for( let i = 0 ; i < this.nBars ; i++ ){
+
+            this.structureArray[ i ] = [];
 
             for( let j = 0 ; j < nVoices ; j++ ){
 
