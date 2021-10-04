@@ -65,7 +65,7 @@ class Piece {
             // RAMPING CONVOLVER
 
             this.fund = randomFloat( 350 , 450 );
-            this.rate = randomFloat( 3.5 , 6 ); // 4
+            this.rate = 4; // randomFloat( 3.9 , 4.5 );
             this.gainVal = 1;
 
             console.log( `fund: ${this.fund} , rate: ${this.rate}` );
@@ -104,12 +104,17 @@ class Piece {
         // minimumVoices , maximumVoices **
         // this.randomRangeStructure( 1 , this.rCArray.length + 1 );
 
-        // arrangementArray
-        this.specArrangementStructure( 
+        /*
+        // arrangementArray **
+         this.specArrangementStructure( 
             // if you replace each item with a randomInt, you can maintain a general
             // arrangement contour, but still have variety between outputs
             [ 5 , 2 , 5 , 1 , 3 , 6 , 2 , 7 , 1 , 8 , 7 , 6 , 5 , 4 , 3 , 1 ] 
         );
+        */
+
+        // groupSize
+        this.twoGroups( 4 );
 
     }
 
@@ -232,26 +237,29 @@ class Piece {
     twoGroups( groupSize ){
 
         this.structureArray = [];
+        let k = 0;
 
         for( let i = 0 ; i < this.nBars ; i++ ){
 
             this.structureArray[ i ] = [];
 
-            for( let j = 0 ; j < nVoices ; j++ ){
+            for( let j = 0 ; j < groupSize ; j++ ){
 
-                this.structureArray[i].push( 1 );
-
-            }
-
-            for( let j = 0 ; j < this.rCArray.length - nVoices ; j++ ){
-
-                this.structureArray[i].push( 0 );
+                this.structureArray[i].push( k % 2 === 1 ? randomInt( 0 , 2 ) : 0 );
 
             }
 
-            shuffle( this.structureArray[i] );
+            for( let j = 0 ; j < this.rCArray.length - groupSize ; j++ ){
+
+                this.structureArray[i].push( k % 2 === 0 ? randomInt( 0 , 2) : 0 );
+
+            }
+
+            k++;
             
         }
+
+        shuffle( this.rCArray );
 
         console.log( this.structureArray );
 
