@@ -103,7 +103,7 @@ class Piece {
         // this.randomRangeStructure( 1 , this.rCArray.length + 1 );
 
         // arrangementArray
-        this.specStructure( [ 5 , 2 , 5 , 1 , 3 , 6 , 2 , 7 , 1 , 8 , 7 , 6 , 5 , 4 , 3 , 1 ] );
+        this.specArrangementSize( [ 5 , 2 , 5 , 1 , 3 , 6 , 2 , 7 , 1 , 8 , 7 , 6 , 5 , 4 , 3 , 1 ] );
 
     }
 
@@ -195,7 +195,7 @@ class Piece {
 
     }
 
-    specStructure( arrangementArray ){
+    specArrangementStructure( arrangementArray ){
 
         this.structureArray = [];
 
