@@ -93,9 +93,14 @@ class Piece {
 
     generateStructure(){
 
+        // minimumVoices
         // this.randomStructure( 1 );
 
-        this.moduloStructure( 2 );
+        // modulus
+        // this.moduloStructure( 2 );
+
+        // minimumVoices , maximumVoices
+        this.randomRangeStructure( 1 , this.rCArray.length + 1 );
 
     }
 
@@ -149,6 +154,37 @@ class Piece {
                 k++;
 
             }
+            
+        }
+
+        console.log( this.structureArray );
+
+    }
+
+    randomRangeStructure( minimumVoices , maximumVoices ){
+
+        this.structureArray = [];
+        let nVoices = 0;
+
+        for( let i = 0 ; i < this.nBars ; i++ ){
+
+            this.structureArray[ i ] = [];
+
+            nVoices = randomInt( minimumVoices , maximumVoices );
+
+            for( let j = 0 ; j < nVoices ; j++ ){
+
+                this.structureArray[i].push( 1 );
+
+            }
+
+            for( let j = 0 ; j < this.rCArray.length - nVoices ; j++ ){
+
+                this.structureArray[i].push( 0 );
+
+            }
+
+            shuffle( this.structureArray[i] );
             
         }
 
