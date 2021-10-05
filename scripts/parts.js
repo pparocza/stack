@@ -78,10 +78,10 @@ class Piece {
                 this.rC2.load( ( this.rate / 16 ) , [ 0 , 1 , 0.01 , 0.015 , 0.1 , 4 ] , randomArrayValue( [ 1 ])                  , this.fund       , [ 100 , 500 ]   , this.gainVal * 3 );
                 this.rC1.load( ( this.rate / 32 ) , [ 0 , 1 , 0.01 , 0.015 , 0.1 , 4 ] , randomArrayValue( [ 2 ])                  , this.fund * 0.5 , [ 100 , 500 ]   , this.gainVal * 3 );
         
-                this.rC5A.load( ( this.rate / 3 )  , [ 0 , 1 , 0.5 , 0.5 , 1 , 1 ]      , 2 ,  this.fund * 0.5 , [ 100 , 5000 ] , this.gainVal * 1 );
-                this.rC4A.load( ( this.rate * 1 )  , [ 0 , 1 , 0.5 , 0.5 , 1 , 1 ]      , 2 ,  this.fund       , [ 100 , 1000 ] , this.gainVal * 1 );
-                this.rC3A.load( ( this.rate / 16 ) , [ 0 , 1 , 0.99 , 0.999 , 5 , 0.5 ] , 2 ,  this.fund * 0.5 , [ 100 , 5000 ] , this.gainVal * 2 );
-                this.rC2A.load( ( this.rate / 8)   , [ 0 , 1 , 0.99 , 0.999 , 5 , 0.5 ] , 2 ,  this.fund       , [ 100 , 1000 ] , this.gainVal * 2 );
+                this.rC5A.load( ( this.rate / 3 )  , [ 0 , 1 , 0.5 , 0.5 , 1 , 1 ]      , 2 ,  this.fund * 0.5 , [ 100 , 5000 ] , this.gainVal * 1.5 );
+                this.rC4A.load( ( this.rate * 1 )  , [ 0 , 1 , 0.5 , 0.5 , 1 , 1 ]      , 2 ,  this.fund       , [ 100 , 1000 ] , this.gainVal * 1.5 );
+                this.rC3A.load( ( this.rate / 16 ) , [ 0 , 1 , 0.99 , 0.999 , 5 , 0.5 ] , 2 ,  this.fund * 0.5 , [ 100 , 5000 ] , this.gainVal * 2.5 );
+                this.rC2A.load( ( this.rate / 8)   , [ 0 , 1 , 0.99 , 0.999 , 5 , 0.5 ] , 2 ,  this.fund       , [ 100 , 1000 ] , this.gainVal * 2.5 );
 
             this.rCArray = [ this.rC1 , this.rC2 , this.rC3 , this.rC4 , this.rC5 , this.rC4A , this.rC5A , this.rC2A , this.rC3A ];
 
