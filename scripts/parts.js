@@ -9,7 +9,7 @@ class Piece {
         this.globalNow = 0;
 
         this.gain = audioCtx.createGain();
-        this.gain.gain.value = 1.5;
+        this.gain.gain.value = 1;
     
         this.fadeFilter = new FilterFade(0);
     
@@ -65,7 +65,7 @@ class Piece {
             // RAMPING CONVOLVER
 
             this.fund = randomFloat( 350 , 450 );
-            this.rate = 4; // randomFloat( 3.9 , 4.5 );
+            this.rate = 4; // 4 , randomFloat( 3.9 , 4.5 );
             this.gainVal = 1;
 
             console.log( `fund: ${this.fund} , rate: ${this.rate}` );
@@ -77,7 +77,7 @@ class Piece {
                 this.rC3.load( ( this.rate * 2 )  , [ 0 , 1 , 0.01 , 0.015 , 0.1 , 4 ] , randomArrayValue( [ 0.25 , 0.5 , 1 , 2 ]) , this.fund       , [ 4000 , 7000 ] , this.gainVal * 3 );
                 this.rC2.load( ( this.rate / 16 ) , [ 0 , 1 , 0.01 , 0.015 , 0.1 , 4 ] , randomArrayValue( [ 1 ])                  , this.fund       , [ 100 , 500 ]   , this.gainVal * 3 );
                 this.rC1.load( ( this.rate / 32 ) , [ 0 , 1 , 0.01 , 0.015 , 0.1 , 4 ] , randomArrayValue( [ 2 ])                  , this.fund * 0.5 , [ 100 , 500 ]   , this.gainVal * 3 );
-        
+
                 this.rC5A.load( ( this.rate / 3 )  , [ 0 , 1 , 0.5 , 0.5 , 1 , 1 ]      , 2 ,  this.fund * 0.5 , [ 100 , 5000 ] , this.gainVal * 1.5 );
                 this.rC4A.load( ( this.rate * 1 )  , [ 0 , 1 , 0.5 , 0.5 , 1 , 1 ]      , 2 ,  this.fund       , [ 100 , 1000 ] , this.gainVal * 1.5 );
                 this.rC3A.load( ( this.rate / 16 ) , [ 0 , 1 , 0.99 , 0.999 , 5 , 0.5 ] , 2 ,  this.fund * 0.5 , [ 100 , 5000 ] , this.gainVal * 2.5 );
@@ -93,15 +93,15 @@ class Piece {
 
         this.qN = 4 * ( 1 / this.rate );
         this.bar = 4 * this.qN;
-        this.nBars = 16;
-        this.structureIdx = randomInt( 0 , 2 );
+        this.nBars = 16 * ( this.rate / 4 );
+        this.structureIdx = 0; // randomInt( 0 , 2 );
 
         switch( this.structureIdx){
 
             case 0: 
                 console.log( 'random structure' );
                 // minimumVoices
-                this.randomStructure( 1 );
+                this.randomStructure( 2 );
                 break;
 
             case 1: 
@@ -358,9 +358,9 @@ class RampingConvolver{
 
         this.noise = new MyBuffer2( 1 , 1 , audioCtx.sampleRate );
         this.noise.noise().fill( 0 );
-        this.noise.playbackRate = 0.25;
+        this.noise.playbackRate = 0.4;
         this.noise.loop = true;
-        this.noise.output.gain.value = 0.1;
+        this.noise.output.gain.value = 0.15;
 
         // NOISE FILTER
 
@@ -385,6 +385,11 @@ class RampingConvolver{
         this.aB.connect( this.aF );
         this.c.connect( this.aG ); this.aF.connect( this.aG.gain.gain );
 
+        // WAVESHAPER
+
+        this.s = new MyWaveShaper();
+        this.s.makeSigmoid( 3 );
+
         // SEQUENCE GAIN
 
         this.sG = new MyGain ( 0 );
@@ -392,6 +397,7 @@ class RampingConvolver{
         this.aG.connect( this.p );
         this.p.connect( this.sG );
         this.sG.connect( this.output );
+        // this.s.connect( this.output );
 
         this.c.output.gain.value = 1;
 
