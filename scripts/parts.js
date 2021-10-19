@@ -94,7 +94,7 @@ class Piece {
         this.qN = 4 * ( 1 / this.rate );
         this.bar = 4 * this.qN;
         this.nBars = 16 * ( this.rate / 4 );
-        this.structureIdx = 3; // randomInt( 0 , 2 );
+        this.structureIdx = 0; // randomInt( 0 , 2 );
 
         switch( this.structureIdx){
 
@@ -167,8 +167,28 @@ class Piece {
 
         this.structureArray1 = [
 
+            [ 0 , 0 , 0 , 0 , 0 , 0 , 1 , 0 , 0 ],
             [ 0 , 1 , 0 , 0 , 0 , 0 , 0 , 0 , 0 ],
+            [ 0 , 1 , 0 , 0 , 0 , 0 , 1 , 0 , 0 ],
             [ 0 , 1 , 0 , 0 , 0 , 0 , 0 , 0 , 0 ],
+
+            [ 0 , 1 , 1 , 0 , 0 , 0 , 1 , 0 , 0 ],
+            [ 0 , 1 , 0 , 0 , 0 , 0 , 0 , 0 , 0 ],
+            [ 0 , 1 , 1 , 0 , 0 , 0 , 1 , 0 , 0 ],
+            [ 0 , 1 , 1 , 1 , 0 , 0 , 0 , 0 , 0 ],
+            [ 0 , 1 , 1 , 0 , 1 , 0 , 1 , 0 , 0 ],
+            [ 0 , 1 , 1 , 1 , 0 , 0 , 0 , 0 , 0 ],
+            [ 0 , 1 , 1 , 0 , 1 , 0 , 0 , 0 , 0 ],
+            [ 0 , 1 , 1 , 1 , 0 , 1 , 0 , 0 , 0 ],
+            [ 0 , 1 , 1 , 0 , 1 , 0 , 0 , 0 , 0 ],
+            [ 0 , 1 , 1 , 1 , 0 , 1 , 0 , 0 , 0 ],
+            [ 0 , 1 , 1 , 0 , 0 , 0 , 0 , 0 , 0 ],
+            [ 0 , 1 , 1 , 0 , 0 , 0 , 0 , 0 , 0 ],
+
+            [ 1 , 1 , 1 , 1 , 1 , 1 , 1 , 1 , 1 ],
+            [ 0 , 1 , 1 , 0 , 1 , 0 , 0 , 0 , 0 ],
+            [ 1 , 1 , 1 , 1 , 1 , 1 , 1 , 1 , 1 ],
+            [ 0 , 1 , 1 , 0 , 1 , 0 , 1 , 0 , 0 ],
 
         ]
 
@@ -347,6 +367,8 @@ class RampingConvolver{
 
     load( rate , rampArray , bufferLength , fund , frequencyRange , gainVal ){
 
+        this.rate = rate;
+
         this.output.gain.gain.value = gainVal;
 
         this.c = new MyConvolver();
@@ -429,26 +451,30 @@ class RampingConvolver{
 
         const sL = randomInt( 4 , 11 );
 
-        let fSeq = new Sequence();
-        fSeq.randomInts( sL , frequencyRange[ 0 ] , frequencyRange[ 1 ] );
+        this.fSeq = new Sequence();
+        this.fSeq.randomInts( sL , frequencyRange[ 0 ] , frequencyRange[ 1 ] );
 
-        fSeq = fSeq.sequence;
+        this.fSeq = this.fSeq.sequence;
 
-        let t = 0;
-
-        for( let i = 0 ; i < 1000 ; i++ ){
-
-            t = i / rate;
-
-            this.p.setPositionAtTime( randomFloat( -1 , 1 ) , t );
-            this.sG.gain.gain.setValueAtTime( randomFloat( 0.5 , 4 ) , t );
-            this.noiseFilter.biquad.frequency.setValueAtTime( fSeq[ i % fSeq.length ] , t );
-
-        }
 
     }
 
     start( startTime , stopTime ){
+
+        let t = 0;
+        let i = 0;
+
+        while( t < stopTime ){
+
+            t = startTime + ( i / ( this.rate * randomFloat( 1 , 7 ) ) );
+
+                this.p.setPositionAtTime( randomFloat( -1 , 1 ) , t );
+                this.sG.gain.gain.setValueAtTime( randomFloat( 1 , 3 ) , t );
+                this.noiseFilter.biquad.frequency.setValueAtTime( this.fSeq[ i % this.fSeq.length ] , t );
+
+            i++;
+
+        }
 
         this.noise.startAtTime( startTime );
         this.aB.startAtTime( startTime );
