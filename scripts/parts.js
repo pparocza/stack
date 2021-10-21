@@ -404,9 +404,9 @@ class RampingConvolver{
 
         this.noise = new MyBuffer2( 1 , 1 , audioCtx.sampleRate );
         this.noise.noise().fill( 0 );
-        this.noise.playbackRate = 0.4;
+        this.noise.playbackRate = 1;
         this.noise.loop = true;
-        this.noise.output.gain.value = 0.15;
+        this.noise.output.gain.value = 0.4;
 
         // NOISE FILTER
 
